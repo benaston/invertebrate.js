@@ -1,3 +1,5 @@
+//responsible for constructing a map of configuration items
+//for the specified environment.
 function ConfigSvc(env) {
 	"use strict";
 
@@ -6,30 +8,21 @@ function ConfigSvc(env) {
 	}
 
 	var that = this, 
-	devConfig = {
-		croniclOneUri: "/itcontractor/",
-		croniclTwoUri: "/itcontract/",
+	devConfig
 		wizeratiUri: "/",
 	},	
 	prodConfig = {
-		croniclOneUri: "https://itcontractor.croni.cl/",
-		croniclTwoUri: "https://itcontract.croni.cl/",
-		wizeratiUri: "https://www.wiz.com/"
+		wizeratiUri: "http://www.github.com/benaston/invertebrate.js/example/"
 	},
 	sharedConfig = {
-		croniclOneItemName: "itcontractor", //intended for use in creation of local "assoc" arrays
-		croniclTwoItemName: "itcontract",
 		templatesUriPart: "templates/",
 		templatePostRenderScriptsUriPart: "templatePostRenderScripts/",
-		metadataUriPart: "config/metadata",
-		searchQueryStringUriPart: "?q=",
-		bookmarksUriPart: "bookmarks", //lack of trailing slash is intentional for file-based testing
-		itemUriPart: "item/"
+		metadataUriPart: "config/metadata"
 	},
 	envEnum = null;
 	
 	function init(env, envEnum) {
-		that.envEnum = envEnum || wiz.mod("enum").Env;
+		that.envEnum = envEnum || app.mod("enum").Env;
 		
 		switch (env) {
 		case that.envEnum.dev:

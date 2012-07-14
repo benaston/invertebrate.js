@@ -7,6 +7,8 @@ function InvertebrateApp() {
 
 	var that = this,
 
+	that.env = "1"; //dev - change manually for now - used by the config service to determine which configuration values to use
+	
 	that.mod = function() {
 		var mods = {};
 
