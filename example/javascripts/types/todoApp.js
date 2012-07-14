@@ -9,7 +9,7 @@ function TodoApp() {
 		
 	function init() {
 	
-		return that;
+		return _.extend(that, InvertebrateApp);
 	}
 
 	return init;

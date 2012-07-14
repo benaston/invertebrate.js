@@ -6,7 +6,19 @@ function InvertebrateApp() {
 	}
 
 	var that = this,
-		
+
+	that.mod = function() {
+		var mods = {};
+
+		return function(name) {
+			if (mods[name]) {
+				return mods[name];
+			}
+
+			return mods[name] = {};
+		};
+	}();
+			
 	that.fetchTemplate = function(uri, done) {
 		self.templates = self.templates || {};
 
