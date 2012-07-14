@@ -3,5 +3,5 @@
 (function (mod) {
 	"use strict";
 
-	mod.ConfigSvc = new ConfigSvc(app.env);
+	mod.Config = new Config(app.env);
 }(app.mod("config")));
