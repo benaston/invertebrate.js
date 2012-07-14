@@ -1,5 +1,4 @@
 //order of declaration matters here
-
 (function (mod) {
 	"use strict";
 
