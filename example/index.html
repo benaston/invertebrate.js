@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html lang="en"> <!-- <html lang="en" manifest="cache.manifest"> -->
 	<head>
+		<!-- Copyright Ben Aston 2012. All rights reserved. -->
+		<meta name="author" content="Ben Aston">
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-		<title>Invertebrate</title>
-	</head>
-	<body>
+		<title>Invertebrate Todo List</title>
+		<link href="http://current.bootstrapcdn.com/bootstrap-v204/css/bootstrap-combined.min.css" media="all" rel="stylesheet" type="text/css">
+		<link href="./styles/screenDefault.css" media="all" rel="stylesheet" type="text/css">
+		<noscript>
+			<style>
+				.container{display:none !important;}
+				#noScriptDialog{display:block !important;}
+			</style>
+		</noscript>
 		
+	</head>
+	<body role="application">
+		<section class="container">
+			<header>
+				<h1>Invertebrate Todo List</h1>
+			</header>
+			<p class="lead">Yet another todo list example application, using the invertebrate.js client-side JS framework.</p>
+			<div id="todoCreate">
+				<!-- todoCreate template goes here -->	
+			</div>
+		</section>		
+		<noscript>
+			<div id="noScriptDialog" role="alertdialog">
+				<h1>This website requires <em>JavaScript</em>.</h1>
+			</div>
+		</noscript>
+		<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+		<script src="../javascripts/invertebrate.js"></script>
 	</body>
 </html>
