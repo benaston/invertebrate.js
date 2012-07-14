@@ -5,12 +5,12 @@ function TodoApp() {
 		return new TodoApp(); 
 	}
 
-	var that = this,
+	var that = this;
 		
 	function init() {
 	
-		return _.extend(that, InvertebrateApp);
+		return _.extend(that, new InvertebrateApp());
 	}
 
-	return init;
+	return init();
 }

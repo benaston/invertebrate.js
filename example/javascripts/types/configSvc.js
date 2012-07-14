@@ -8,7 +8,7 @@ function ConfigSvc(env) {
 	}
 
 	var that = this, 
-	devConfig
+	devConfig = {
 		wizeratiUri: "/",
 	},	
 	prodConfig = {
@@ -21,7 +21,7 @@ function ConfigSvc(env) {
 	},
 	envEnum = null;
 	
-	function init(env, envEnum) {
+	function init() {
 		that.envEnum = envEnum || app.mod("enum").Env;
 		
 		switch (env) {
@@ -38,5 +38,5 @@ function ConfigSvc(env) {
 		return that;
 	}
 
-	return init;
+	return init();
 }

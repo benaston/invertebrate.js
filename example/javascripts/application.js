@@ -1,4 +1,3 @@
 //application entry-point
-$(function() { 
-	window.app = new TodoApp(); 
-});
+window.app = new TodoApp(); 
+

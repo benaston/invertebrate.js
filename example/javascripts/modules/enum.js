@@ -7,4 +7,4 @@
 		prod: "3"
 	};
 	
-}(todoApp.mod("enum"))); //need window specification here?
+}(app.mod("enum")));

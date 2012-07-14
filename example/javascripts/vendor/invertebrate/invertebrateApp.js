@@ -5,7 +5,7 @@ function InvertebrateApp() {
 		return new InvertebrateApp(); 
 	}
 
-	var that = this,
+	var that = this;
 
 	that.env = "1"; //dev - change manually for now - used by the config service to determine which configuration values to use
 	
@@ -51,8 +51,6 @@ function InvertebrateApp() {
 	};
 	
 	that.renderTemplate = function(el, templateUri, uiComponent, done, postRenderActionScriptUri) {
-		var role = wiz.mod("auth").AuthSvc.getCurrentUserRole();
-		if(!role || role === wiz.mod("enum").UserRole.Stranger) { return; }
 		if(!el) { throw "el not supplied"; }
 		if(!templateUri) { throw "templateUri not supplied"; }
 		
@@ -60,10 +58,10 @@ function InvertebrateApp() {
 		wiz.fetchTemplate(templateUri, function(tmpl) {
 			el.html(tmpl({ model: uiComponent.Model.toJSON() }, { jQuery: $ }));
 			if(postRenderActionScriptUri) {
-				wiz.fetchTemplatePostRenderAction(postRenderActionScriptUri, function(data) {
+				app.fetchTemplatePostRenderAction(postRenderActionScriptUri, function(data) {
 					//need to reference postrenderaction by type/template to ensure correct addressing
 					var postRenderActionLeftPart = _.str.words(postRenderActionScriptUri, '/')[0];
-					wiz.mod("ui").PostRenderActions[postRenderActionLeftPart + "/" + uiComponent.View.template](uiComponent);
+					app.mod("ui").PostRenderActions[postRenderActionLeftPart + "/" + uiComponent.View.template](uiComponent);
 					done(el) //supply el for posssible additional work, like dom insertion
 				});
 			}
@@ -80,5 +78,5 @@ function InvertebrateApp() {
 		return that;
 	}
 
-	return init;
+	return init();
 }
