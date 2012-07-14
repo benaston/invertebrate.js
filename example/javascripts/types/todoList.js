@@ -1,7 +1,11 @@
+//TODO:
+// - CONFIGURE THE ROUTING BEHAVIOR CF BACKBONE INTERCEPTION
+
 function TodoListModel() {
 	"use strict";
 
 	if (!(this instanceof TodoListModel)) {
+		
 		return new TodoListModel(); 
 	}
 
@@ -24,6 +28,7 @@ function TodoListView(model) {
 	"use strict";
 
 	if (!(this instanceof TodoListView)) {
+		
 		return new TodoListView(); 
 	}
 
@@ -49,35 +54,6 @@ function TodoListView(model) {
 	return init();
 }
 
-function TodoView(model) {
-	"use strict";
-
-	if (!(this instanceof TodoView)) {
-		return new TodoView(); 
-	}
-
-	var that = this, el = "<li class='todo></li>", templateName = "todo";
-	
-	that.$el = $(that.el);
-	
-	that.render = function() {		
-		//WIP!
-		that.$el.append(app.renderTemplate(theOther.el, templateUri, that, function () {
-
-		}, null));
-	};
-	
-	that.postRender = function() {
-		
-	};
-
-	function init() {
-
-		return _.extend(that, new InvertebrateView());
-	}
-
-	return init();
-}
 // 
 // 
 // this.ViewPrototype = Backbone.View.extend({

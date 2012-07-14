@@ -48,7 +48,7 @@ function InvertebrateApp() {
 		});
 	};
 	
-	that.renderTemplate = function(el, templateUri, uiComponent, done, postRenderActionScriptUri) {
+	that.renderTemplate = function(el, templateUri, uiComponent, success, postRenderActionScriptUri) {
 		if(!el) { throw "el not supplied"; }
 		if(!templateUri) { throw "templateUri not supplied"; }
 		
@@ -60,12 +60,12 @@ function InvertebrateApp() {
 					//need to reference postrenderaction by type/template to ensure correct addressing
 					var postRenderActionLeftPart = _.str.words(postRenderActionScriptUri, '/')[0];
 					app.mod("ui").PostRenderActions[postRenderActionLeftPart + "/" + uiComponent.View.template](uiComponent);
-					done(el) //supply el for posssible additional work, like dom insertion
+					success(el) //supply el for posssible additional work, like dom insertion
 				});
 			}
 			else {
-				if(done) {
-					done(el); //complete for when there is no post-render action script
+				if(success) {
+					success(el); //complete for when there is no post-render action script
 				}
 			}
 		});
