@@ -1,3 +1,3 @@
 //application entry-point
-self.app = new App(invertebrate.env.dev);
+self.todoApp.instance = new todoApp.App(invertebrate.env.dev);
 

@@ -1,17 +1,21 @@
-function App(env) {
-	"use strict";
+(function(app) {
+	app.App = function(env) {
+		"use strict";
 
-	if (!(this instanceof App)) {
-		return new App(); 
-	}
+		if (!(this instanceof app.App)) {
+			return new app.App(env); 
+		}
 
-	var that = this;
+		var that = this;
 			
-	function init() {
-		that.env = env;
+		function init() {
+			if(!env) { throw "env not supplied"; }
+			
+			that.env = env;
 		
-		return _.extend(that, new InvertebrateApp());
-	}
+			return _.extend(that, new invertebrate.App(app.mod("templates").TemplateServerSvc));
+		}
 
-	return init();
-}
+		return init();
+	};
+}(todoApp));

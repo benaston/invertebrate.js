@@ -1,58 +1,63 @@
-//TODO:
-// - CONFIGURE THE ROUTING BEHAVIOR CF BACKBONE INTERCEPTION
+// TODO: CONFIGURE THE ROUTING BEHAVIOR CF BACKBONE INTERCEPTION
+(function(app) {	
+	app.TodoListModel = function() {
+		"use strict";
 
-function TodoListModel() {
-	"use strict";
+		if (!(this instanceof app.TodoListModel)) {		
+			return new app.TodoListModel(); 
+		}
 
-	if (!(this instanceof TodoListModel)) {
-		
-		return new TodoListModel(); 
-	}
+		var that = this;
 
-	var that = this;
+		// this.RouterPrototype = Backbone.Router.extend({ /* ... */ });
 
-	// this.RouterPrototype = Backbone.Router.extend({ /* ... */ });
-
-	that.todos = {}; //assoc array?
+		that.todos = []; //assoc array?
 	
+		that.addTodo = function(todo) {
+			that.todos.push(todo);
+			$.publish("/todoList/onAddTodo");
+		};
 
-	function init() {
+		function init() {
 
-		return that;
-	}
+			return that;
+		}
 
-	return init;
-}
-
-function TodoListView(model) {
-	"use strict";
-
-	if (!(this instanceof TodoListView)) {
-		
-		return new TodoListView(); 
-	}
-
-	var that = this, el = "#todoList", templateName = null;
-	
-	that.$el = $(that.el);
-	
-	that.render = function() {		
-		$.each(that.Model.todos, function(index, value) {			
-			that.$el.append(new TodoView(value).render());
-		});
-	};
-	
-	that.postRender = function() {
-		
+		return init();
 	};
 
-	function init() {
+	app.TodoListView = function(model) {
+		"use strict";
 
-		return _.extend(that, new InvertebrateView());
-	}
+		if (!(this instanceof TodoListView)) {
+		
+			return new TodoListView(); 
+		}
 
-	return init();
-}
+		var that = this, el = "#todoList", templateName = null;
+	
+		that.$el = $(that.el);
+	
+		that.render = function() {		
+			$.each(that.Model.todos, function(index, value) {			
+				that.$el.append(new TodoView(value).render());
+			});
+		};
+	
+		that.postRender = function() {
+		
+		};
+
+		function init() {
+			$.subscribe("/todoList/onAddTodo", that.render);		
+			that.render();
+		
+			return _.extend(that, new InvertebrateView());
+		}
+
+		return init();
+	};
+}(todoApp));
 
 // 
 // 
