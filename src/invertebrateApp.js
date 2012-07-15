@@ -7,6 +7,7 @@ function InvertebrateApp() {
 
 	var that = this;
 
+	//implements trivial string-based namespacing
 	that.mod = function() {
 		var mods = {};
 
@@ -18,15 +19,28 @@ function InvertebrateApp() {
 			return mods[name] = {};
 		};
 	}();
-			
-	that.fetchTemplate = function(uri, done) {
-		self.templates = self.templates || {};
+	
+	//fetches a template from a URI, adds to 'public' 
+	//templates collection and supplies to success callback		
+	that.fetchTemplate = function(uri, done) {				
+		if (!options) { throw "options not supplied"; }
+		if (!options.serverUriSelectionFunc) { throw "serverUriSelectionFunc not supplied"; }
+		if (!options.resourceName) { throw "resourceName not supplied"; }
+		
+		var defaultOptions = {
+				done: function(metadata) {},
+				fail: function (jqxhr, settings, exception) { console.log(exception); throw; }
+			}
+			options = _.extend({}, that.defaults, options),
+			done = function() { return options.done(that.metadata[itemName]); }; //closes over the metadata variable
+		
+		that.templates = that.templates || {};
 
 		if (templates[uri]) {
 			return done(templates[uri]);
 		}
 
-		return $.ajax({ url: uri, success: function(data){
+		return $.ajax({ url: uri, done: function(data){
 			var tmpl = _.template(data);
 			templates[uri] = tmpl;
 			done(tmpl);
@@ -40,7 +54,7 @@ function InvertebrateApp() {
 		  return done(templatePostRenderActions[uri]);
 		}
 
-		return $.ajax({url: uri, dataType: "script", cache: false, success: function(data, textStatus, jqXHR) {
+		return $.ajax({url: uri, dataType: "script", cache: false, done: function(data, textStatus, jqXHR) {
 			templatePostRenderActions[uri] = data;
 			done(data);
 			}}).fail(function(jqxhr, settings, exception) {
@@ -48,10 +62,10 @@ function InvertebrateApp() {
 		});
 	};
 	
-	that.renderTemplateRemote = function($el, templateUri, model, templateName, success, postRenderActionScriptUri) {
+	that.renderTemplateRemote = function($el, templateUri, model, templateName, done, postRenderActionScriptUri) {
 		var defaults = {
 				filterModel: null,
-				success: null,
+				done: null,
 				error: function (e) { throw "runSearch error: " + e; }
 		};
 		for(var index in defaults) {
@@ -69,12 +83,12 @@ function InvertebrateApp() {
 					//need to reference postrenderaction by type/template to ensure correct addressing
 					var postRenderActionLeftPart = _.str.words(postRenderActionScriptUri, '/')[0];
 					app.mod("ui").PostRenderActions[postRenderActionLeftPart + "/" + templateName](view);
-					success($el); //supply $el for posssible additional work, like dom insertion
+					done($el); //supply $el for posssible additional work, like dom insertion
 				});
 			}
 			else {
-				if(success) {
-					success($el); //complete for when there is no post-render action script
+				if(done) {
+					done($el); //complete for when there is no post-render action script
 				}
 			}
 		});

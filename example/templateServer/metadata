@@ -1,0 +1,15 @@
+try {
+	
+	app.mod("templateServer").TemplateServerSvc.metadata["templateServer"] = {
+
+		//add metadata items (both data and functionality) here as needed. e.g.:
+		//foo: "bar",
+		//
+		// searchUriFactory: function(options) {
+		// 		//...				
+		// 		return searchUri;
+		// 	}
+		
+	};
+
+}  catch(e) { console.log("templateServer metadata problem: " + e); throw; }
