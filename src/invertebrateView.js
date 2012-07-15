@@ -9,7 +9,7 @@ function InvertebrateView(model) {
 
 	
 	that.constructTemplateUri = function() {
-
+		
 	};
 
 	function init() {

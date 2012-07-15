@@ -38,9 +38,9 @@ function TodoView(model) {
 	that.render = function() {		
 		//WIP!
 		//el, templateUri, uiComponent, done, postRenderActionScriptUri
-		that.$el.append(app.renderTemplate(theOther.el, templateUri, that, function () {
-
-		}, null));
+		app.renderTemplate(that.el, constructTemplateUri(), that.Model, templateName, function () {
+			
+		}, null);
 	};
 	
 	that.postRender = function() {

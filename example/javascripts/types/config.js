@@ -9,7 +9,8 @@ function Config(env) {
 
 	var	that = this, 
 		devConfig =  {
-			wizeratiUri: "/"
+			wizeratiUri: "/",
+			templateServerUris: [ "/templateserver/" ]
 		}, 
 		prodConfig = {
 			wizeratiUri: "http://www.github.com/benaston/invertebrate.js/example/"
