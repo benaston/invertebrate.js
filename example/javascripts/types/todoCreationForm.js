@@ -2,11 +2,27 @@
 	app.TodoCreationFormModel = function() {
 		"use strict";
 
-		if (!(this instanceof app.TodoCreationFormModel)) {		
+		if (!(this instanceof app.TodoCreationFormModel)) {
 			return new app.TodoCreationFormModel(); 
 		}
 
-		var that = this;
+		var that = this, _title, _description;
+
+		this.setTitle = function(value, options) {
+			that._title = value;
+
+			if(options && options.silent === true) { return; }
+			
+			$.publish("/todoCreationForm/title/");
+		};
+		
+		this.setDescription = function(value, options) {
+			that._description = value;
+
+			if(options && options.silent === true) { return; }
+
+			$.publish("/todoCreationForm/description/");
+		};
 
 		function init() {
 			return that;
@@ -32,14 +48,26 @@
 	
 		this.render = function(options) {
 			options = options || { done: function() { /* do nothing */ } };
+
 			return app.instance.renderTemplate(that.$el, _templateName, that.Model, options);
 		};
 	
 		this.postRender = function() {
-			that.$el.find("#addTodoButton").click(function(e) { 
-				todoApp.instance.todoList.Model.addTodo(new todoApp.TodoModel(that.$el.find("#title").val(), that.$el.find("#description").val()));
-				e.preventDefault();
-				
+			that.$el.find("#title").live('change', function() {
+				that.Model.setTitle(that.$el.find("#description").val(), { silent: true })
+			});
+			
+			that.$el.find("#description").live('change', function() {
+				that.Model.setDescription(that.$el.find("#description").val(), { silent: true })
+			});
+
+			that.$el.find("#addTodoButton").live('click', function(e) { 
+				var $titleField = that.$el.find("#title");
+				var $descField = that.$el.find("#description");
+				todoApp.instance.todoList.Model.addTodo(new todoApp.TodoModel($titleField.val(), $descField.val()));
+				todoApp.instance.todoCreationForm.Model.setTitle("");
+				todoApp.instance.todoCreationForm.Model.setDescription("");
+
 				return false;
 			});
 		};
@@ -49,7 +77,9 @@
 			
 			that.Model = model;
 			var view = _.extend(that, new invertebrate.View());
-			view.render({ done: that.postRender });
+			$.subscribe("/todoCreationForm/title/", that.render);
+			$.subscribe("/todoCreationForm/description/", that.render);
+			that.render({ done: that.postRender });
 			
 			return view;
 		}
