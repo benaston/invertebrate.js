@@ -11,9 +11,9 @@
 
 		// this.RouterPrototype = Backbone.Router.extend({ /* ... */ });
 
-		that.todos = []; //assoc array?
+		this.todos = []; //assoc array?
 	
-		that.addTodo = function(todo) {
+		this.addTodo = function(todo) {
 			that.todos.push(todo);
 			$.publish("/todoList/onAddTodo");
 		};
@@ -29,30 +29,36 @@
 	app.TodoListView = function(model) {
 		"use strict";
 
-		if (!(this instanceof TodoListView)) {
-		
-			return new TodoListView(); 
+		if (!(this instanceof app.TodoListView)) {		
+			return new app.TodoListView(model); 
 		}
 
-		var that = this, el = "#todoList", templateName = null;
+		var that = this, _el = "#todoList", _templateName = null;
 	
-		that.$el = $(that.el);
+		this.$el = $(_el);
+		
+		that.Model = null;
 	
-		that.render = function() {		
-			$.each(that.Model.todos, function(index, value) {			
-				that.$el.append(new TodoView(value).render());
+		//arse
+		this.render = function() {
+			that.$el.empty();
+			$.each(that.Model.todos, function(index, value) {
+				new app.TodoView(value).render( { done: function($el) { that.$el.append($el); } } );
 			});
 		};
 	
-		that.postRender = function() {
+		this.postRender = function() {
 		
 		};
 
 		function init() {
+			if(!model) { throw "model not supplied"; }
+			
+			that.Model = model;
 			$.subscribe("/todoList/onAddTodo", that.render);		
 			that.render();
 		
-			return _.extend(that, new InvertebrateView());
+			return _.extend(that, new invertebrate.View());
 		}
 
 		return init();

@@ -21,31 +21,37 @@
 				return mods[name] = {};
 			};
 		}();
-	
-		//fetches a template from a URI, adds to 'public' 
-		//templates collection and supplies to success callback		
-		that.fetchTemplate = function(uri, options) {				
+
+		//todo consider wizerati metadata implementation
+
+		//fetches a template from a URI, adds to 'public'
+		//templates collection and supplies to success callback
+		that.fetchTemplate = function(uri, options) {
 			if (!options) { throw "options not supplied"; }
-			if (!options.serverUriSelectionFunc) { throw "serverUriSelectionFunc not supplied"; }
-			if (!options.resourceName) { throw "resourceName not supplied"; }
 		
 			var defaultOptions = {
 					done: function(metadata) {},
 					fail: function(jqxhr, settings, exception) { console.log(exception); throw exception; } },
 				options = _.extend({}, defaultOptions, options),
-				done = function() { return options.done(that.metadata[itemName]); }; //closes over the metadata variable
-		
+				done = options.done, //function() { return options.done(that.metadata[uri]); }; //closes over the metadata variable
+				ajaxDoneCallback = function(data) {
+						var tmpl = _.template(data);
+						that.templates[uri] = tmpl;
+						done(tmpl);
+					},
+				ajaxFailCallback = function(jqxhr, settings, exception) {
+						console.log(jqxhr.status);
+					}; 
+
 			that.templates = that.templates || {};
 
-			if (templates[uri]) {
-				return done(templates[uri]);
+			if (that.templates[uri]) {
+				return done(that.templates[uri]);
 			}
 
-			return $.ajax({ url: uri, done: function(data){
-				var tmpl = _.template(data);
-				templates[uri] = tmpl;
-				done(tmpl);
-			}, cache: false });
+			return $.ajax({ url: uri, cache: false })
+				.done(ajaxDoneCallback)
+				.fail(ajaxFailCallback);
 		};
 	
 		that.fetchTemplatePostRenderAction = function(uri, done) {
@@ -63,36 +69,33 @@
 			});
 		};
 	
-		that.renderTemplate = function(model, options) {
+		that.renderTemplate = function($el, templateName, model, options) {
 			var defaults = {
 					done: function($el) {},
-					error: function (jqxhr, settings, exception) { console.log(exception); throw exception; }
+					error: function (jqxhr, settings, exception) { console.log(exception); throw exception; },
+					postRenderActionScriptUri: null
 			};
-			for(var index in defaults) {
-				if(!options[index]) options[index] = defaults[index];
-			}
-		
+			options = _.extend({}, defaults, options);
+
+			if(!$el) { throw "$el not supplied"; }
 			if(!model) { throw "model not supplied"; }
-			if(!model.$el) { throw "model.$el not supplied"; }
-	//		if(!templateUri) { throw "templateUri not supplied"; }
 		
+			var templateUri = _templateServerSvc.getTemplateUri(templateName);
 			//could modify to use self cache
-			wiz.fetchTemplate(templateUri, function(tmpl) {
-				$el.html(tmpl({ model: model.toJSON() }, { jQuery: $ }));
-				if(postRenderActionScriptUri) {
+			that.fetchTemplate(templateUri, { done: function(tmpl) {
+				$el.html(tmpl({ model: _.clone(model) }, { jQuery: $ }));
+				if(options.postRenderActionScriptUri) {
 					app.fetchTemplatePostRenderAction(postRenderActionScriptUri, function(data) {
 						//need to reference postrenderaction by type/template to ensure correct addressing
-						var postRenderActionLeftPart = _.str.words(postRenderActionScriptUri, '/')[0];
+						var postRenderActionLeftPart = _.str.words(options.postRenderActionScriptUri, '/')[0];
 						app.mod("ui").PostRenderActions[postRenderActionLeftPart + "/" + templateName](view);
-						done($el); //supply $el for posssible additional work, like dom insertion
+						options.done($el); //supply $el for posssible additional work, like dom insertion
 					});
 				}
 				else {
-					if(done) {
-						done($el); //complete for when there is no post-render action script
-					}
+					options.done($el); //complete for when there is no post-render action script
 				}
-			});
+			}});
 		};
 		
 		function init() {

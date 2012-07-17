@@ -1,18 +1,19 @@
 (function(app) {
-	app.TodoModel = function() {
+	app.TodoModel = function(title, description) {
 		"use strict";
 
-		if (!(this instanceof app.TodoModel)) {		
-			return new app.TodoModel(); 
+		if (!(this instanceof app.TodoModel)) {
+			return new app.TodoModel(title, description); 
 		}
 
 		var that = this;
 
-		that.title = "";	
-		that.isDone = false;	
-		that.description = "";	
-
 		function init() {
+			if(!title) { throw "title not supplied"; }
+			if(!description) { throw "description not supplied"; }
+
+			that.title = title;
+			that.description = description;
 
 			return that;
 		}
@@ -23,31 +24,33 @@
 	app.TodoView = function(model) {
 		"use strict";
 
-		if (!(this instanceof TodoView)) {		
-			return new TodoView(); 
+		if (!(this instanceof app.TodoView)) {
+			return new app.TodoView(model);
 		}
 
 		var that = this, 
-			el = "<li class='todo></li>", 
-			templateName = "todo";
+			_el = "<li class='todo'></li>", 
+			_templateName = "todo";
+
+		this.$el = $(_el);
+
+		this.Model = null;
 	
-		that.$el = $(that.el);
-	
-		that.render = function() {		
-			//WIP!
-			//el, templateUri, uiComponent, done, postRenderActionScriptUri
-			app.renderTemplate(that.el, constructTemplateUri(), that.Model, templateName, function () {
-			
-			}, null);
+		this.render = function(options) {
+			return app.instance.renderTemplate(that.$el, _templateName, that.Model, options);
 		};
 	
-		that.postRender = function() {			
+		this.postRender = function() {
 		};
 
 		function init() {
-			return _.extend(that, new InvertebrateView());
+			if(!model) { throw "model not supplied"; }
+			
+			that.Model = model;
+			return _.extend(that, new invertebrate.View());
 		}
 
 		return init();
 	};
 }(todoApp));
+

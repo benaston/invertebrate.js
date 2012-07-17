@@ -7,7 +7,7 @@
 		}
 
 		var that = this;
-	
+			
 		function init() {
 			return that;
 		}

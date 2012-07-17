@@ -1,6 +1,6 @@
 //a resource can have a template, metadata and a post-render action?
 //note 1: meant to be a function to calculate left-part of the uri to point to to retrieve resources
-//todo: convert to prototype function binding throughout
+//todo: convert to prototype function binding throughout?
 (function(invertebrate) {	
 	invertebrate.TemplateServerSvc = function(configSvc, serverUriSelectionFunc) {
 		"use strict";
@@ -9,23 +9,13 @@
 			return new invertebrate.TemplateServerSvc(configSvc, serverUriSelectionFunc); 
 		}
 
-		var that = this, _configSvc = null, _serverUriSelectionFunc = function() { return "/"; }; //see note 1
+		var that = this, _configSvc = null;
 		
-		that.metadata = {}; //scripts register themselves in here
+		this.serverUriSelectionFunc = function() { return "./example/templateServer/"; }; //see note 1
 		
-		that.getTemplateUri = function (templateName) {
-			var templatesUriPart = that.configSvc.config.templatesUriPart;
+		this.metadata = {}; //scripts register themselves in here
 
-			return that.getSearchItemCroniclUri() + templatesUriPart + templateName;
-		};
-
-		that.getPostRenderActionScriptUri = function (templateName) {
-			var postRenderScriptsUriPart = that.configSvc.config.templatePostRenderScriptsUriPart;
-
-			return that.getSearchItemCroniclUri() + postRenderScriptsUriPart + templateName;
-		};
-
-		function getMetadata(options) {
+		this.getMetadata = function(options) {
 			if(!options) { throw "options not supplied"; }
 			if(!options.serverUriSelectionFunc) { throw "serverUriSelectionFunc not supplied"; }
 			if(!options.resourceName) { throw "resourceName not supplied"; }
@@ -33,7 +23,7 @@
 			var defaultOptions = {
 					done: function(metadata) {},
 					fail: function (jqxhr, settings, exception) { console.log(exception); throw exception; }
-				}
+				},
 				options = _.extend({}, that.defaults, options),
 				done = function() { return options.done(that.metadata[itemName]); }; //closes over the metadata variable
 		
@@ -49,17 +39,31 @@
 					 dataType: "script", 
 					 cache: false }).done(done)
 					 				.fail(options.fail);		
-		}	
+		};
+		
+		this.getTemplateUri = function (templateName) {
+			var templatesUriPart = that._configSvc.config.templatesUriPart;
 
-		function init() {						
+			return that.serverUriSelectionFunc() + templatesUriPart + templateName;
+		};
+
+		this.getPostRenderActionScriptUri = function (templateName) {
+			var postRenderScriptsUriPart = that.configSvc.config.templatePostRenderScriptsUriPart;
+
+			return that.getSearchItemCroniclUri() + postRenderScriptsUriPart + templateName;
+		};			
+
+		function init() {					
 			if(!configSvc) { throw "configSvc not supplied"; }
 			
 			that._configSvc = configSvc;
-			that._serverUriSelectionFunc = serverUriSelectionFunc ? serverUriSelectionFunc : that._serverUriSelectionFunc;
+			that.serverUriSelectionFunc = serverUriSelectionFunc || that.serverUriSelectionFunc;
 			
 			return that;
 		}
 
 		return init();
 	};	
+	
+
 }(invertebrate));

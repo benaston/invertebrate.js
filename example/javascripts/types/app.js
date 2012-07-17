@@ -12,7 +12,7 @@
 			if(!env) { throw "env not supplied"; }
 			
 			that.env = env;
-		
+
 			return _.extend(that, new invertebrate.App(app.mod("templates").TemplateServerSvc));
 		}
 

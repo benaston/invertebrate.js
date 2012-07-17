@@ -1,0 +1,5 @@
+<form name="todoCreationForm">
+	<input type="text" id="title" name="title" />
+	<textarea id="description" name="description"></textarea>
+	<input type="button" id="addTodoButton" class="button" value="Add Todo" />
+</form>
