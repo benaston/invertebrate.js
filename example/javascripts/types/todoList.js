@@ -14,6 +14,10 @@
 		that.resourceName = "todoList";
 		this.todos = [];
 	
+		this.getTodo = function(id) {
+			return _.filter(that.todos, function(i) { return i.id === id})[0];
+		}
+		
 		this.addTodo = function(todo, options) {
 			if(!todo) { throw "todo not supplied"; }
 			options = options || { silent:false };
@@ -61,7 +65,7 @@
 	
 	invertebrate.Model.isExtendedBy(app.TodoListModel);
 
-	app.TodoListView = function(model) {
+	app.TodoListView = function(model, options) {
 		"use strict";
 		
 		if (!(this instanceof app.TodoListView)) {
@@ -72,8 +76,8 @@
 			_el = "#todoList",
 			_templateName = null;
 	
-		this.$el = $(_el);
-		that.Model = null;
+		this.$el = null;
+		this.Model = null;
 	
 		this.render = function(e, options) {
 			options = options || { done: that.postRender };
@@ -89,8 +93,11 @@
 
 		function init() {
 			if(!model) { throw "model not supplied"; }
+			options = options || { selector: "#todoList" };
 
 			that.Model = model;
+			_el = options.selector;
+			that.$el = $(_el);
 			$.subscribe(that.Model.updateEventUri, that.render);
 			$.subscribe(that.Model.deleteEventUri, that.render);
 			that.render();

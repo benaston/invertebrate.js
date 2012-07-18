@@ -59,6 +59,13 @@
 						app.instance.todoList.Model.changeTodoPriority(decreasePriorityButton.data("id"), -1);
 					});
 
+					var doneButton = that.$el.find(".doneButton");
+					doneButton.on('click', function() {
+						var todo = app.instance.todoList.Model.getTodo(doneButton.data("id"));
+						app.instance.todoList.Model.removeTodo(doneButton.data("id"));
+						app.instance.completedTodoList.Model.addTodo(todo);
+					});
+
 					options.done(that.$el); 
 					that.postRender(); 
 				} });

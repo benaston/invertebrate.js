@@ -4,3 +4,22 @@ header {
 input, textarea {
 	display:block;
 }
+#completedTodoList * {
+	opacity:.4;	
+}
+#completedTodoList input {
+	display:none;
+}
+#todoList:empty:before, #completedTodoList:empty:before {
+	position: relative;
+	left: -25px;
+}
+#todoList:empty:before {
+	content: 'There are no todo items in progress.';
+}
+#completedTodoList:empty:before {
+	content: 'There are no completed todo items.';
+}
+h3 {
+	margin-top:32px;
+}
