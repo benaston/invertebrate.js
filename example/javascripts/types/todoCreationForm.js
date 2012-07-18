@@ -47,7 +47,7 @@
 		this.Model = null;
 	
 		this.render = function(options) {
-			options = options || { done: function() { /* do nothing */ } };
+			options = options || { done: that.postRender };
 
 			return app.instance.renderTemplate(that.$el, _templateName, that.Model, options);
 		};

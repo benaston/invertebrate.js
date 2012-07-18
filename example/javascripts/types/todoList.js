@@ -13,9 +13,30 @@
 
 		this.todos = []; //assoc array?
 	
-		this.addTodo = function(todo) {
+		this.addTodo = function(todo, options) {
 			that.todos.push(todo);
-			$.publish("/todoList/onAddTodo");
+			
+			if(options && options.silent === true) { return; }
+			
+			$.publish("update://todoList/todos");
+		};
+
+		this.removeTodo = function(id, options) {
+			that.todos = _.filter(that.todos, function(i) { return i.id !== id});
+			
+			if(options && options.silent === true) { return; }
+			
+			$.publish("delete://todoList/todos");
+		};
+
+		this.changeTodoPriority = function(id, delta, options) {
+			var todo = _.filter(that.todos, function(i) { return i.id === id})[0];
+			var sourceIndex = _.indexOf(that.todos, todo);
+			that.todos.move(sourceIndex, sourceIndex-delta);
+			
+			if(options && options.silent === true) { return; }
+			
+			$.publish("update://todoList/todos");
 		};
 
 		function init() {
@@ -39,11 +60,12 @@
 		
 		that.Model = null;
 	
-		//arse
-		this.render = function() {
+		this.render = function(e, options) {
+			options = options || { done: that.postRender };
+			
 			that.$el.empty();
 			$.each(that.Model.todos, function(index, value) {
-				new app.TodoView(value).render( { done: function($el) { that.$el.append($el); } } );
+				new app.TodoView(value).render( { done: function($el) { that.$el.append($el); options.done(); } } );
 			});
 		};
 	
@@ -55,7 +77,8 @@
 			if(!model) { throw "model not supplied"; }
 			
 			that.Model = model;
-			$.subscribe("/todoList/onAddTodo", that.render);		
+			$.subscribe("delete://todoList/todos", that.render);
+			$.subscribe("update://todoList/todos", that.render);
 			that.render();
 		
 			return _.extend(that, new invertebrate.View());

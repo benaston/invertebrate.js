@@ -1,5 +1,5 @@
 (function(app) {
-	app.TodoModel = function(title, description) {
+	app.TodoModel = function(title, description, id) {
 		"use strict";
 
 		if (!(this instanceof app.TodoModel)) {
@@ -14,6 +14,7 @@
 
 			that.title = title;
 			that.description = description;
+			that.id = id || guidGenerator();
 
 			return that;
 		}
@@ -22,8 +23,7 @@
 	};
 
 	app.TodoView = function(model) {
-		"use strict";
-
+		"use strict"
 		if (!(this instanceof app.TodoView)) {
 			return new app.TodoView(model);
 		}
@@ -37,10 +37,35 @@
 		this.Model = null;
 	
 		this.render = function(options) {
-			return app.instance.renderTemplate(that.$el, _templateName, that.Model, options);
+			options = options || { done: function() {} };
+			
+			app.instance.renderTemplate(that.$el, _templateName, that.Model, { 
+				done: function() { 
+					var deleteButton = that.$el.find(".deleteTodoButton");
+					deleteButton.on('click', function() {
+						app.instance.todoList.Model.removeTodo(deleteButton.data("id"));
+					});
+
+					var increasePriorityButton = that.$el.find(".increasePriorityButton");
+					increasePriorityButton.on('click', function() {
+						app.instance.todoList.Model.changeTodoPriority(increasePriorityButton.data("id"), 1);
+					});
+
+					var decreasePriorityButton = that.$el.find(".decreasePriorityButton");
+					decreasePriorityButton.on('click', function() {
+						app.instance.todoList.Model.changeTodoPriority(decreasePriorityButton.data("id"), -1);
+					});
+					
+					options.done(that.$el); 
+					that.postRender(); 
+				} });
 		};
 	
 		this.postRender = function() {
+			var theOther = this;
+			
+
+
 		};
 
 		function init() {

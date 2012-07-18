@@ -1,2 +1,6 @@
 <h2><%=model.title%></h2>
 <p><%=model.description%></p>
+<input data-id="<%=model.id%>" type="button" class="deleteTodoButton btn btn-danger" value="Delete" />
+<input data-id="<%=model.id%>" type="button" class="increasePriorityButton btn" value="Increase Priority" />
+<input data-id="<%=model.id%>" type="button" class="decreasePriorityButton btn" value="Decrease Priority" />
+<hr/>
