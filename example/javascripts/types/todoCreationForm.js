@@ -6,14 +6,20 @@
 			return new app.TodoCreationFormModel(); 
 		}
 
-		var that = this, _title, _description;
+		var that = this, 
+		    _title = null, 
+			_description = null;
+
+		this.updateEventUri = "update://todoCreationForm/";
 
 		this.setTitle = function(value, options) {
+			options = options || { silent:false };
+			
 			that._title = value;
 
 			if(options && options.silent === true) { return; }
 			
-			$.publish("/todoCreationForm/title/");
+			$.publish(that.updateEventUri);
 		};
 		
 		this.setDescription = function(value, options) {
@@ -21,7 +27,7 @@
 
 			if(options && options.silent === true) { return; }
 
-			$.publish("/todoCreationForm/description/");
+			$.publish(that.updateEventUri);
 		};
 
 		function init() {
@@ -30,6 +36,8 @@
 
 		return init();
 	};
+
+	invertebrate.Model.isExtendedBy(app.TodoCreationFormModel);
 
 	app.TodoCreationFormView = function(model) {
 		"use strict";
@@ -43,7 +51,6 @@
 			_templateName = "todoCreationForm";
 
 		this.$el = $(_el);
-
 		this.Model = null;
 	
 		this.render = function(options) {
@@ -53,18 +60,19 @@
 		};
 	
 		this.postRender = function() {
-			that.$el.find("#title").live('change', function() {
-				that.Model.setTitle(that.$el.find("#description").val(), { silent: true })
-			});
-			
-			that.$el.find("#description").live('change', function() {
-				that.Model.setDescription(that.$el.find("#description").val(), { silent: true })
+			var $title = that.$el.find(".title");
+			$title.live('change', function() {
+				that.Model.setTitle($title.val(), { silent: true });
 			});
 
-			that.$el.find("#addTodoButton").live('click', function(e) { 
-				var $titleField = that.$el.find("#title");
-				var $descField = that.$el.find("#description");
-				todoApp.instance.todoList.Model.addTodo(new todoApp.TodoModel($titleField.val(), $descField.val()));
+			var $description = that.$el.find(".description");
+			$description.live('change', function() {
+				that.Model.setDescription($description.val(), { silent: true })
+			});
+
+			var $addTodoButton = that.$el.find(".addTodoButton");
+			$addTodoButton.live('click', function(e) { 
+				todoApp.instance.todoList.Model.addTodo(new todoApp.TodoModel(that.$el.find(".title").val(), that.$el.find(".description").val()));
 				todoApp.instance.todoCreationForm.Model.setTitle("");
 				todoApp.instance.todoCreationForm.Model.setDescription("");
 
@@ -77,13 +85,14 @@
 			
 			that.Model = model;
 			var view = _.extend(that, new invertebrate.View());
-			$.subscribe("/todoCreationForm/title/", that.render);
-			$.subscribe("/todoCreationForm/description/", that.render);
-			that.render({ done: that.postRender });
+			$.subscribe(that.Model.updateEventUri, that.render);
+			that.render();
 			
 			return view;
 		}
 
 		return init();
 	};
+	
+	invertebrate.View.isExtendedBy(app.TodoCreationFormView);
 }(todoApp));

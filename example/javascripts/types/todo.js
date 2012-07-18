@@ -22,24 +22,27 @@
 		return init();
 	};
 
+	invertebrate.Model.isExtendedBy(app.TodoModel);
+	
 	app.TodoView = function(model) {
 		"use strict"
+
 		if (!(this instanceof app.TodoView)) {
 			return new app.TodoView(model);
 		}
 
 		var that = this, 
-			_el = "<li class='todo'></li>", 
+			_el = "<li class='todo'></li>",
 			_templateName = "todo";
 
 		this.$el = $(_el);
 
 		this.Model = null;
-	
+
 		this.render = function(options) {
-			options = options || { done: function() {} };
-			
-			app.instance.renderTemplate(that.$el, _templateName, that.Model, { 
+			options = options || { done: that.postRender };
+
+			app.instance.renderTemplate(that.$el, _templateName, that.Model, {
 				done: function() { 
 					var deleteButton = that.$el.find(".deleteTodoButton");
 					deleteButton.on('click', function() {
@@ -55,27 +58,25 @@
 					decreasePriorityButton.on('click', function() {
 						app.instance.todoList.Model.changeTodoPriority(decreasePriorityButton.data("id"), -1);
 					});
-					
+
 					options.done(that.$el); 
 					that.postRender(); 
 				} });
 		};
 	
 		this.postRender = function() {
-			var theOther = this;
-			
-
-
 		};
 
 		function init() {
 			if(!model) { throw "model not supplied"; }
-			
+
 			that.Model = model;
+
 			return _.extend(that, new invertebrate.View());
 		}
 
 		return init();
 	};
-}(todoApp));
 
+	invertebrate.View.isExtendedBy(app.TodoView);
+}(todoApp));

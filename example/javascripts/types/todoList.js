@@ -3,61 +3,75 @@
 	app.TodoListModel = function() {
 		"use strict";
 
-		if (!(this instanceof app.TodoListModel)) {		
-			return new app.TodoListModel(); 
+		if (!(this instanceof app.TodoListModel)) {
+			return new app.TodoListModel();
 		}
 
 		var that = this;
-
-		// this.RouterPrototype = Backbone.Router.extend({ /* ... */ });
-
-		this.todos = []; //assoc array?
+		
+		this.updateEventUri = "update://todoList/";
+		this.deleteEventUri = "delete://todoList/";
+		this.todos = [];
 	
 		this.addTodo = function(todo, options) {
+			if(!todo) { throw "todo not supplied"; }
+			options = options || { silent:false };
+
 			that.todos.push(todo);
-			
-			if(options && options.silent === true) { return; }
-			
-			$.publish("update://todoList/todos");
+			if(options.silent === true) { return; }
+
+			$.publish(that.updateEventUri);
 		};
 
 		this.removeTodo = function(id, options) {
+			if(!id) { throw "id not supplied"; }
+			options = options || { silent:false };
+
 			that.todos = _.filter(that.todos, function(i) { return i.id !== id});
-			
-			if(options && options.silent === true) { return; }
-			
-			$.publish("delete://todoList/todos");
+			if(options.silent === true) { return; }
+
+			$.publish(that.deleteEventUri);
 		};
 
 		this.changeTodoPriority = function(id, delta, options) {
+			if(!id) { throw "id not supplied"; }
+			if(!delta) { throw "delta not supplied"; }
+			options = options || { silent:false };
+
 			var todo = _.filter(that.todos, function(i) { return i.id === id})[0];
 			var sourceIndex = _.indexOf(that.todos, todo);
-			that.todos.move(sourceIndex, sourceIndex-delta);
-			
+			var targetIndex = sourceIndex-delta;
+
+			if(targetIndex < that.todos.length) {
+				that.todos.move(sourceIndex, sourceIndex-delta);
+			}
+
 			if(options && options.silent === true) { return; }
-			
-			$.publish("update://todoList/todos");
+
+			$.publish(that.updateEventUri);
 		};
 
 		function init() {
-
-			return that;
+			return _.extend(that, new invertebrate.Model());
 		}
 
 		return init();
 	};
+	
+	invertebrate.Model.isExtendedBy(app.TodoListModel);
 
 	app.TodoListView = function(model) {
 		"use strict";
-
-		if (!(this instanceof app.TodoListView)) {		
-			return new app.TodoListView(model); 
+		
+		if (!(this instanceof app.TodoListView)) {
+			return new app.TodoListView(model);
 		}
 
-		var that = this, _el = "#todoList", _templateName = null;
+		var that = this, 
+			_el = "#todoList",
+			_templateName = null;
 	
 		this.$el = $(_el);
-		
 		that.Model = null;
 	
 		this.render = function(e, options) {
@@ -70,67 +84,21 @@
 		};
 	
 		this.postRender = function() {
-		
 		};
 
 		function init() {
 			if(!model) { throw "model not supplied"; }
-			
+
 			that.Model = model;
-			$.subscribe("delete://todoList/todos", that.render);
-			$.subscribe("update://todoList/todos", that.render);
+			$.subscribe(that.Model.updateEventUri, that.render);
+			$.subscribe(that.Model.deleteEventUri, that.render);
 			that.render();
-		
-			return _.extend(that, new invertebrate.View());
+
+			return that;
 		}
 
 		return init();
 	};
-}(todoApp));
 
-// 
-// 
-// this.ViewPrototype = Backbone.View.extend({
-// 	el: $("<article>").addClass("width320 details panel hasFadeTransition hasHorizontalCollapseTransition"),
-// 		
-// 	template: "pinnedItemPanel",
-// 			
-// 	initialize: function () {
-// 		var theOther = this;
-// 			
-// 	},
-// 
-// 	render: function () {
-// 		var theOther = this;
-// 		var templateUri = croniclSvc.getTemplateUri(this.template);
-// 			
-// 		wiz.renderTemplate(theOther.el, templateUri, that, function () {
-// 			that.Model.set({isSelectedItem: "false" }, { silent: true })
-// 			var item = new ItemDetails()(that.Model.get("item"));
-// 			var detailsTemplateUri = croniclSvc.getTemplateUri(item.View.template);
-// 			wiz.renderTemplate(theOther.el.find(".itemDetails"), 
-// 							   detailsTemplateUri, 
-// 							   item, 
-// 							   function (el) {
-// 							   	$("#pinnedItemPanelsContainer").append(theOther.el);
-// 									
-// 								//this dance surrounding the hasHorizontalCollapseTransition is required
-// 								//to circumvent a limitation of CSS, when multiple classes contribute transitions
-// 								//browsers get confused.
-// 								setTimeout(function() { theOther.el.addClass("hasHorizontalCollapseTransition").removeClass("horizontallyCollapsed").addClass("fadedIn"); el.addClass("fadedIn"); }, 0);
-// 								setTimeout(function() { theOther.el.removeClass("hasHorizontalCollapseTransition") }, 200);
-// 									
-// 								theOther.postRender();
-// 							   }, 
-// 							   null);
-// 		}, null);
-// 			
-// 		return this;
-// 	},
-// 
-// 	postRender: function () {
-// 		var theOther = this;
-// 			
-// 	}
-// 				
-// });
+	invertebrate.View.isExtendedBy(app.TodoListView);
+}(todoApp));

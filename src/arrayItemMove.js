@@ -15,3 +15,11 @@ function guidGenerator() {
     };
     return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
+
+Function.prototype.derive = (function() {
+    function Dummy() {}
+    return function() {
+        Dummy.prototype = this.prototype;
+        return new Dummy;
+    };
+})();
