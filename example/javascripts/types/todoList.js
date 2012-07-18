@@ -11,6 +11,7 @@
 		
 		this.updateEventUri = "update://todoList/";
 		this.deleteEventUri = "delete://todoList/";
+		that.resourceName = "todoList";
 		this.todos = [];
 	
 		this.addTodo = function(todo, options) {
