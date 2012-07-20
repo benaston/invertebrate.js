@@ -1,4 +1,18 @@
 (function(invertebrate) {
+	invertebrate.Router = function() {
+		this.routes = { }; //example: { modelType: null, action: functionPointer  }
+		
+		this.registerRoute = function(modelType, action) {
+			this.routes[modelType] = action;
+		};
+		
+		this.route = function(model, args) {
+			this.routes[typeof(model)](args);
+		};
+	};
+}(invertebrate));
+
+(function(invertebrate) {
 	invertebrate.Model = function() {
 		"use strict";
 
