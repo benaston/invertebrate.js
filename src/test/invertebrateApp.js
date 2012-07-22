@@ -1,16 +1,15 @@
-$(document).ready(function() {
-	
+$(document).ready(function () {
 	module("InvertebrateApp", {
 
-	    setup: function() {
+	    setup: function () {
 	    },
 
-	    teardown: function() {
+	    teardown: function () {
 	    }
 
 	});
 	  
-	test("", function() {
+	test("", function () {
 		
 	});
 });

@@ -1,0 +1,68 @@
+<!-- todo: add the concept of application 'sub-servers/slave-servers' to correspond to the cronicls wizerati points at -->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Copyright Ben Aston 2012. All rights reserved. -->
+		<meta name="author" content="Ben Aston">
+		<meta http-equiv="Content-type" content="text/html; chfunction (t=UTF-8">
+		<title>Invertebrate Todo List</title>
+		<link href="http://current.bootstrapcdn.com/bootstrap-v204/css/bootstrap-combined.min.css" media="all" rel="stylesheet" type="text/css">
+		<link href="./example/styles/screenDefault.css" media="all" rel="stylesheet" type="text/css">
+		<noscript>
+			<style>
+				.container{display:none !important;}
+				#noScriptDialog{display:block !important;}
+			</style>
+		</noscript>		
+	</head>
+	<body role="application">
+		<section class="container">
+			<header>
+				<h1>Invertebrate Todo List</h1>
+				<a href="/settings" style="float:right;">Settings</a>
+			</header>
+			<p class="lead">Yet another todo list example application, using the invertebrate.js client-side JS framework.</p>
+			
+			<div id="todoCreationForm">
+
+			</div>
+			<h2>In Progress</h2>
+			<ol id="todoList">
+				<!-- todos template (a list of rendered 'todo' templates) goes here -->	
+			</ol>
+			<h2>Complete</h2>
+			<ol id="completedTodoList">
+				<!-- todos template (a list of rendered 'todo' templates) goes here -->	
+			</ol>
+		</section>
+		<noscript>
+			<div id="noScriptDialog" role="alertdialog">
+				<h1>This website requires <em>JavaScript</em>.</h1>
+			</div>
+		</noscript>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+		<script src="http://code.jquery.com/jquery-1.7.2.js"></script>
+		<script src="/src/vendor/tiny-pub-sub.js"></script>
+		
+		<script src="/src/arrayItemMove.js"></script>
+		<script src="/src/invertebrate.js"></script>
+		<script src="/src/app.js"></script>
+		<script src="/src/config.js"></script>
+		<script src="/src/templateServerSvc.js"></script>
+		<script src="/src/model.js"></script>
+		<script src="/src/view.js"></script>
+		<script src="/src/router.js"></script>
+		<script src="/src/env.js"></script>
+
+		<script src="/example/javascripts/todoApp.js"></script>
+
+		<script src="/example/javascripts/types/config.js"></script>
+		<script src="/example/javascripts/types/todo.js"></script>
+		<script src="/example/javascripts/types/chore.js"></script>
+		<script src="/example/javascripts/types/todoList.js"></script>
+		<script src="/example/javascripts/types/todoCreationForm.js"></script>
+		<script src="/example/javascripts/modules.js"></script>
+		<script src="/example/javascripts/types/app.js"></script>
+		<script src="/example/javascripts/appStart.js"></script>
+	</body>
+</html>

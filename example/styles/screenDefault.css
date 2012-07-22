@@ -1,3 +1,47 @@
+h2 {
+	text-transform:uppercase;
+	color: rgba(0,0,0,.3);
+	margin-top:32px;
+}
 header {
 	margin-top:20px;
+}
+input, textarea {
+	display:block;
+}
+#todoList, #completedTodoList {
+	list-style-type: none;
+	margin:0;
+}
+#completedTodoList * {
+	opacity:.4;	
+}
+#completedTodoList input {
+	display:none;
+}
+#todoList:empty:before, #completedTodoList:empty:before {
+	position: relative;
+}
+#todoList:empty:before {
+	content: 'There are no todo items in progress.';
+}
+#completedTodoList:empty:before {
+	content: 'There are no completed todo items.';
+}
+
+.todo, .chore {
+	position: relative;
+	padding:10px;
+}
+.chore {
+	border-left: 3px solid silver;
+}
+.buttonGrid td {
+	padding:5px;
+}
+.buttonGrid input {
+	width:100%;
+}
+.lead {
+	font-size:15px;
 }

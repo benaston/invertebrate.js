@@ -1,0 +1,20 @@
+<h3><%=model.title%></h3>
+<p><%=model.description%></p>
+<table class="buttonGrid" style="position:absolute; right:0; top:0;">
+	<tr>
+		<td>
+			<input data-id="<%=model.id%>" type="button" class="increasePriorityButton btn" value="Up" />
+		</td>
+		<td>
+			<input data-id="<%=model.id%>" type="button" class="deleteTodoButton btn btn-danger" value="Delete" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<input data-id="<%=model.id%>" type="button" class="decreasePriorityButton btn" value="Down" />
+		</td>
+		<td>
+			<input data-id="<%=model.id%>" type="button" class="doneButton btn btn-success" value="Done" />
+		</td>
+	</tr>
+</table>

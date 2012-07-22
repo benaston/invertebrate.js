@@ -10,4 +10,3 @@
 
 	mod.TemplateServerSvc = new invertebrate.TemplateServerSvc(todoApp.mod("config").Config);
 }(todoApp.mod("templates")));
-

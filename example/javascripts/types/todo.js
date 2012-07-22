@@ -1,53 +1,91 @@
-(function(app) {
-	app.TodoModel = function() {
-		"use strict";
+(function (app) {
+	"use strict";
 
-		if (!(this instanceof app.TodoModel)) {		
-			return new app.TodoModel(); 
+	function TodoModel(title, description, id) {
+		if (!(this instanceof app.TodoModel)) {
+			return new app.TodoModel(title, description);
 		}
 
 		var that = this;
 
-		that.title = "";	
-		that.isDone = false;	
-		that.description = "";	
-
 		function init() {
+			if (!title) { throw "title not supplied"; }
+			if (!description) { throw "description not supplied"; }
+
+			that.title = title;
+			that.description = description;
+			that.id = id || guidGenerator();
 
 			return that;
 		}
 
 		return init();
-	};
+	}
 
-	app.TodoView = function(model) {
-		"use strict";
+	app.TodoModel = TodoModel;
+	invertebrate.Model.isExtendedBy(app.TodoModel);
 
-		if (!(this instanceof TodoView)) {		
-			return new TodoView(); 
+	function TodoView(model) {
+		if (!(this instanceof app.TodoView)) {
+			return new app.TodoView(model);
 		}
 
-		var that = this, 
-			el = "<li class='todo></li>", 
+		var that = this,
+			el = "<li class='todo'></li>",
 			templateName = "todo";
-	
-		that.$el = $(that.el);
-	
-		that.render = function() {		
-			//WIP!
-			//el, templateUri, uiComponent, done, postRenderActionScriptUri
-			app.renderTemplate(that.el, constructTemplateUri(), that.Model, templateName, function () {
-			
-			}, null);
+
+		this.$el = $(el);
+		this.Model = null;
+
+		this.render = function (options) {
+			options = options || { done: that.postRender };
+
+			app.instance.renderTemplate(that.$el, templateName, that.Model, {
+				done: function ($el) { that.bindEvents($el, options.done); }
+			});
 		};
-	
-		that.postRender = function() {			
+
+		this.postRender = function () {
+		};
+
+		this.bindEvents = function ($el, done) {
+			var deleteButton = $el.find(".deleteTodoButton"),
+				increasePriorityButton = $el.find(".increasePriorityButton"),
+				decreasePriorityButton = $el.find(".decreasePriorityButton"),
+				doneButton = $el.find(".doneButton");
+
+			deleteButton.on('click', function () {
+				app.instance.todoList.Model.removeTodo(deleteButton.data("id"));
+			});
+
+			increasePriorityButton.on('click', function () {
+				app.instance.todoList.Model.changeTodoPriority(increasePriorityButton.data("id"), 1);
+			});
+
+			decreasePriorityButton.on('click', function () {
+				app.instance.todoList.Model.changeTodoPriority(decreasePriorityButton.data("id"), -1);
+			});
+
+			doneButton.on('click', function () {
+				var todo = app.instance.todoList.Model.getTodo(doneButton.data("id"));
+				app.instance.todoList.Model.removeTodo(doneButton.data("id"));
+				app.instance.completedTodoList.Model.addTodo(todo);
+			});
+
+			done($el);
 		};
 
 		function init() {
-			return _.extend(that, new InvertebrateView());
+			if (!model) { throw "model not supplied"; }
+
+			that.Model = model;
+
+			return _.extend(that, new invertebrate.View());
 		}
 
 		return init();
-	};
+	}
+	
+	app.TodoView = TodoView;
+	invertebrate.View.isExtendedBy(app.TodoView);
 }(todoApp));

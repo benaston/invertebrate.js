@@ -1,0 +1,6 @@
+<form name="todoCreationForm">
+	<input type="text" class="title" name="title" placeholder="title" />
+	<textarea class="description" name="description" placeholder="description" ></textarea>
+	<input type="button" class="addTodoButton btn btn-primary" value="Add Todo" />
+	<input type="button" class="addChoreButton btn btn-primary" value="Add Chore" />
+</form>
