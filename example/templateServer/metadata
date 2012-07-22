@@ -5,7 +5,7 @@ try {
 		//add metadata items (both data and functionality) here as needed. e.g.:
 		//foo: "bar",
 		//
-		// searchUriFactory: function(options) {
+		// searchUriFactory: function (options) {
 		// 		//...				
 		// 		return searchUri;
 		// 	}

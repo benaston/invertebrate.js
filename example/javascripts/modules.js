@@ -10,11 +10,3 @@
 
 	mod.TemplateServerSvc = new invertebrate.TemplateServerSvc(todoApp.mod("config").Config);
 }(todoApp.mod("templates")));
-
-// (function (mod) {
-// 	"use strict";
-// 
-// 	mod.TodoList = new todoApp.TodoListView(new todoApp.TodoListModel());
-// }(todoApp.mod("ui")));
-
-

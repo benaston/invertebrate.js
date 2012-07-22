@@ -2,19 +2,19 @@
  * http://benalman.com/
  * Copyright (c) 2011 "Cowboy" Ben Alman; Licensed MIT, GPL */
 
-(function($) {
+(function ($) {
 
   var o = $({});
 
-  $.subscribe = function() {
+  $.subscribe = function () {
     o.on.apply(o, arguments);
   };
 
-  $.unsubscribe = function() {
+  $.unsubscribe = function () {
     o.off.apply(o, arguments);
   };
 
-  $.publish = function() {
+  $.publish = function () {
     o.trigger.apply(o, arguments);
   };
 
