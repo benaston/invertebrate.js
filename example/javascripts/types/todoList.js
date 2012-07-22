@@ -82,7 +82,7 @@
 
 			that.$el.empty();
 			$.each(that.Model.todos, function (index, value) {
-				app.router.route(value, { $parentDomNode: that.$el });
+				app.instance.router.route(value, { $parentDomNode: that.$el });
 			});
 		};
 

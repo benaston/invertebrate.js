@@ -2,7 +2,6 @@
 	"use strict";
 
 	function ChoreModel(title, description, id) {
-
 		if (!(this instanceof app.ChoreModel)) {
 			return new app.ChoreModel(title, description);
 		}
@@ -27,7 +26,6 @@
 	invertebrate.Model.isExtendedBy(app.ChoreModel);
 
 	function ChoreView(model) {
-
 		if (!(this instanceof app.ChoreView)) {
 			return new app.ChoreView(model);
 		}

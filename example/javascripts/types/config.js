@@ -1,10 +1,7 @@
 (function (app) {
 	"use strict";
 
-	//responsible for constructing a map of configuration items
-	//for the specified environment.
 	function Config(env) {
-
 		if (!(this instanceof app.Config)) {
 			return new app.Config(env);
 		}

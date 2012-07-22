@@ -10,17 +10,17 @@
 		    _templateServerSvc = null;
 
 		//implements trivial string-based modularisation
-		// that.mod = function () {
-		// 	var mods = {};
-		// 
-		// 	return function (name) {
-		// 		if (mods[name]) {
-		// 			return mods[name];
-		// 		}
-		// 
-		// 		return mods[name] = {};
-		// 	};
-		// }();
+		that.mod = function () {
+			var mods = {};
+		
+			return function (name) {
+				if (mods[name]) {
+					return mods[name];
+				}
+		
+				return mods[name] = {};
+			};
+		}();
 
 		//todo consider wizerati metadata implementation
 
