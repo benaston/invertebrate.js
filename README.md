@@ -5,7 +5,7 @@ Yet another client-side web application JavaScript framework.
 
 Example
 --------
-The example todo application can be found online at (http://sheltered-wave-3425.herokuapp.com/)[http://sheltered-wave-3425.herokuapp.com/].
+The example todo application can be found online at http://sheltered-wave-3425.herokuapp.com/[http://sheltered-wave-3425.herokuapp.com/].
 
 License & Copyright
 --------
