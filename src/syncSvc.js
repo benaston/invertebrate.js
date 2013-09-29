@@ -1,48 +1,53 @@
 //a resource can have a template, metadata and a post-render action?
 //note 1: meant to be a function to calculate left-part of the uri to point to to retrieve resources
-//todo: convert to prototype function binding throughout?
 (function (invertebrate) {
-	"use strict";
+    "use strict";
 
-	function SyncSvc(configSvc, serverUriSelectionFunc) {
+    function SyncSvc(configSvc, serverUriSelectionFunc) {
 
-		if (!(this instanceof invertebrate.SyncSvc)) {
-			return new invertebrate.SyncSvc(configSvc, serverUriSelectionFunc);
-		}
+        if (!(this instanceof invertebrate.SyncSvc)) {
+            return new invertebrate.SyncSvc(configSvc, serverUriSelectionFunc);
+        }
 
-		var that = this, _configSvc = null, _syncInterval = null;
+        var that = this,
+            _configSvc = null,
+            _syncInterval = null;
 
-		this.serverUriSelectionFunc = function () { return "./example/templateServer/"; }; //see note 1
+        this.serverUriSelectionFunc = function () {
+            return "./example/templateServer/";
+        }; //see note 1
 
-		this.metadata = {}; //scripts register themselves in here
+        this.metadata = {}; //scripts register themselves in here
 
-		this.sync = function (options) {
-			$.publish("sync://syncableModels/"); //review uri
-		};
+        this.sync = function (options) {
+            $.publish("sync://syncableModels/"); //review uri
+        };
 
-		this.start = function () {
-			var syncinterval = that._configSvc.syncinterval || 10;
+        this.start = function () {
+            var syncinterval = _configSvc.syncinterval || 10;
 
-			that._syncInterval = setInterval(function () {
-				that.sync();
-			}, syncInterval);
-		};
+            _syncInterval = setInterval(function () {
+                that.sync(null);
+            }, _syncInterval);
+        };
 
-		this.stop = function () {
-			clearInterval(that._syncInterval);
-		};
+        this.stop = function () {
+            clearInterval(_syncInterval);
+        };
 
-		function init() {
-			if (!configSvc) { throw "configSvc not supplied"; }
-			
-			that._configSvc = configSvc;
-			that.serverUriSelectionFunc = serverUriSelectionFunc || that.serverUriSelectionFunc;
+        function init() {
+            if (!configSvc) {
+                throw "configSvc not supplied";
+            }
 
-			return that;
-		}
+            _configSvc = configSvc;
+            that.serverUriSelectionFunc = serverUriSelectionFunc || that.serverUriSelectionFunc;
 
-		return init();
-	};
+            return that;
+        }
 
-	invertebrate.SyncSvc = SyncSvc;
+        return init();
+    };
+
+    invertebrate.SyncSvc = SyncSvc;
 }(invertebrate));

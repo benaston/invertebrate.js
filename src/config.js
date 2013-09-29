@@ -1,41 +1,41 @@
 (function (invertebrate) {
-	"use strict";
+    "use strict";
 
-	function Config(env) {
-		if (!(this instanceof invertebrate.Config)) {
-			return new invertebrate.Config(env);
-		}
+    function Config(env) {
+        if (!(this instanceof invertebrate.Config)) {
+            return new invertebrate.Config(env);
+        }
 
-		var envEnum = null;
+        var envEnum = null;
 
-		this.devConfig = {};
-		this.prodConfig = {};
-		this.sharedConfig = {};
+        this.devConfig = {};
+        this.prodConfig = {};
+        this.sharedConfig = {};
 
-		//should be called from types implementing this prototype
-		this.collateConfiguration = function () {
-			this.envEnum = envEnum || invertebrate.env;
+        //should be called from types implementing this prototype
+        this.collateConfiguration = function () {
+            this.envEnum = envEnum || invertebrate.env;
 
-			switch (env) {
-			case this.envEnum.dev:
-				this.config = _.extend({}, this.devConfig, this.sharedConfig);
-				break;
-			case this.envEnum.prod:
-				this.config = _.extend({}, this.prodConfig, this.sharedConfig);
-				break;
-			default:
-				throw "invalid environment: " + env;
-			}
+            switch (env) {
+                case this.envEnum.dev:
+                    this.config = _.extend({}, this.devConfig, this.sharedConfig);
+                    break;
+                case this.envEnum.prod:
+                    this.config = _.extend({}, this.prodConfig, this.sharedConfig);
+                    break;
+                default:
+                    throw "invalid environment: " + env;
+            }
 
-			return this;
-		};
+            return this;
+        };
 
-		function init() {
-			return this;
-		}
+        function init() {
+            return this;
+        }
 
-		return init();
-	}
+        return init();
+    }
 
-	invertebrate.Config = Config;
+    invertebrate.Config = Config;
 }(invertebrate));
