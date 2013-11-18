@@ -9,7 +9,7 @@ If you like invertebrate.js, please let others know by <a href="https://twitter.
 
 Example
 --------
-The example todo application can be found online at [http://sheltered-wave-3425.herokuapp.com/](http://sheltered-wave-3425.herokuapp.com/).
+The example todo application iss currently offline whilst I update it to better reflect my current skills.
 
 License & Copyright
 --------
