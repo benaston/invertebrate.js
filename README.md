@@ -1,6 +1,8 @@
 invertebrate.js
 ===============
 
+Please note: I intend to move the JavaScript in invertebrate.js to be more idiomatic, adding methods to the prototype object instead of the actual objects themselves (this codebase is somewhat inconsistent), but this is not high on my list of things to do at the moment.
+
 Yet another client-side web application JavaScript framework.
 
 If you like invertebrate.js, please let others know by <a href="https://twitter.com/share?text=Check%20out%20invertebrate.js%2C%20a%20simple%20JavaScript%20client-side%20MVC%20framework.%20%23invertebrate.js%20%40benastontweet&url=https%3A%2F%2Fgithub.com%2Fbenaston%2Finvertebrate.js" target="_blank">sending a tweet</a> (opens a form in a new window to send a tweet).
