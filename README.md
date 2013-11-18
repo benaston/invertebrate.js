@@ -10,6 +10,8 @@ An incredibly simple and lightwieght client-side MVC framework. It offers:
  
 If you like invertebrate.js, please let others know by <a href="https://twitter.com/share?text=Check%20out%20invertebrate.js%2C%20a%20simple%20JavaScript%20client-side%20MVC%20framework.%20%23invertebrate.js%20%40benastontweet&url=https%3A%2F%2Fgithub.com%2Fbenaston%2Finvertebrate.js" target="_blank">sending a tweet</a> (opens a form in a new window to send a tweet).
 
+Please note: I intend to make the JavaScript here more idiomatic at some point in the future when I find time, hanging methods off prototypes, for example.
+
 Example
 --------
 The example todo application iss currently offline whilst I update it to better reflect my current skills.
