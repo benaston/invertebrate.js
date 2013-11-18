@@ -14,7 +14,7 @@ Please note: I intend to make the JavaScript here more idiomatic at some point i
 
 Example
 --------
-The example todo application iss currently offline whilst I update it to better reflect my current skills.
+The example todo application iss currently offline whilst I update it to better reflect my current skills. In the meantime, please take a look at another of my experimental applications using this framework at: https://github.com/benaston/wiz.
 
 License & Copyright
 --------
