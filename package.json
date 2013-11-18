@@ -1,10 +1,12 @@
 {
-  "name": "injertebrate-example",
+  "name": "invertebrate.js",
   "version": "0.0.1",
-  "dependencies": {
-    "node-static": "0.6.0"
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
   },
-  "engines": {
-    "node": "0.8.x"
+  "dependencies": {
+    "express": "3.4.4",
+    "ejs": "*"
   }
 }

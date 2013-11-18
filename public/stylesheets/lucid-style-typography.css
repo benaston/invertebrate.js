@@ -1,0 +1,192 @@
+@font-face {
+    font-family: pictos;
+    src: url("../fonts/pictos.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: proxima-nova-100;
+    src: url("../fonts/proxima-nova-100.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: museo-sans-500;
+    src: url("../fonts/museo-sans-500.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: proxima-nova-200;
+    src: url("../fonts/proxima-nova-200.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: proxima-nova-300;
+    src: url("../fonts/proxima-nova-300.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: proxima-nova-400;
+    src: url("../fonts/proxima-nova-400.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: proxima-nova-500;
+    src: url("../fonts/proxima-nova-500.woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, p {
+    font-family: "proxima-nova-400", Arial, sans-serif;
+    font-size: 100%;
+    line-height: 120%;
+    color: #333333;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    clear: both;
+    -webkit-user-select: auto;
+    text-rendering: optimizelegibility;
+}
+
+h1 {
+    margin: 10px 0;
+    line-height: 2.1rem;
+    font-size: 1.7em;
+    font-family: "proxima-nova-100";
+}
+
+h2 {
+    margin: 10px 0;
+    line-height: 40px;
+    font-size: 1.1em;
+    font-family: proxima-nova-300;
+    clear: both; /*needed*/
+    -webkit-user-select: auto;
+}
+
+.itemMetadata h1 {
+    margin-bottom: 18px;
+}
+
+.itemMetadata h3 {
+    text-align:right;
+}
+h3 {
+    margin: 10px 0;
+    line-height: 21px;
+    font-size: 1em;
+    color: #999;
+    font-family: "proxima-nova-300";
+    font-weight: bold;
+}
+
+h4, h5, h6 {
+    margin: 10px 0;
+    line-height: 20px;
+    font-family: "proxima-nova-400";
+}
+
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+blockquote {
+    padding: 0 5px 0 5px;
+    margin: 20px 0 3px 0;
+    font-style: italic;
+}
+
+code {
+    padding: 2px 4px;
+    color: #d14;
+    white-space: nowrap;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+}
+
+.label-btn {
+    font-size: .8rem;
+}
+
+code, pre {
+    padding: 0 3px 2px;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 12px;
+    color: #333333;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+body {
+    -webkit-user-select: none;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+    font-family: "proxima-nova-400", Arial;
+}
+
+.pictos {
+    font-family: 'pictos';
+}
+
+.hovering-text {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 24px 69px rgba(0, 0, 0, 0.5);
+    padding: 3px;
+    border-radius: 5px;
+}
+
+a {
+    color: #08c;
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    outline: 0;
+}
+
+a:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+
+.heading-aside {
+    font-size: 1rem;
+    font-family: "proxima-nova-400", Arial, sans-serif;
+}
+
+.field {
+    color: #333;
+    font-size: 1rem;
+    line-height: 35px;
+}
+
+.itemMetadata h3,.itemContact h3 {
+    line-height: .8rem;
+}
+
+.id {
+    font-size:.7rem;
+}
+.updatedDateTime {
+    font-size:.8rem;
+}
