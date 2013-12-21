@@ -2,8 +2,8 @@
 	"use strict";
 
 	function TodoListModel() {
-		if (!(this instanceof appRoot.TodoListModel)) {
-			return new appRoot.TodoListModel();
+		if (!(this instanceof todoList.TodoListModel)) {
+			return new todoList.TodoListModel();
 		}
 
 		var that = this;
@@ -60,6 +60,6 @@
 		return init();
 	}
 
-	appRoot.TodoListModel = TodoListModel;
-    appRoot.invertebrate.Model.isExtendedBy(appRoot.TodoListModel);
-}(appRoot));
+	todoList.TodoListModel = TodoListModel;
+    todoList.invertebrate.Model.isExtendedBy(todoList.TodoListModel);
+}(todoList));

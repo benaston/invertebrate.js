@@ -2,8 +2,8 @@
 	"use strict";
 
 	function TodoListView(model, options) {
-		if (!(this instanceof appRoot.TodoListView)) {
-			return new appRoot.TodoListView(model);
+		if (!(this instanceof todoList.TodoListView)) {
+			return new todoList.TodoListView(model);
 		}
 
 		var that = this,
@@ -18,7 +18,7 @@
 
 			that.$el.empty();
 			$.each(that.Model.todos, function (index, value) {
-				appRoot.instance.router.route(value, { $parentDomNode: that.$el });
+				todoList.instance.router.route(value, { $parentDomNode: that.$el });
 			});
 		};
 
@@ -42,6 +42,6 @@
 		return init();
 	}
 
-	appRoot.TodoListView = TodoListView;
-	appRoot.invertebrate.View.isExtendedBy(appRoot.TodoListView);
-}(appRoot));
+	todoList.TodoListView = TodoListView;
+	todoList.invertebrate.View.isExtendedBy(todoList.TodoListView);
+}(todoList));

@@ -2,8 +2,8 @@
     "use strict";
 
     function TodoCreationFormView(model) {
-        if (!(this instanceof appRoot.TodoCreationFormView)) {
-            return new appRoot.TodoCreationFormView(model);
+        if (!(this instanceof todoList.TodoCreationFormView)) {
+            return new todoList.TodoCreationFormView(model);
         }
 
         var that = this,
@@ -16,7 +16,7 @@
         this.render = function (options) {
             options = options || { done: that.postRender };
 
-            return appRoot.instance.renderTemplate(that.$el, _templateName, that.Model, options);
+            return todoList.instance.renderTemplate(that.$el, _templateName, that.Model, options);
         };
 
         this.postRender = function () {
@@ -32,18 +32,18 @@
 
             var $addTodoButton = that.$el.find(".addTodoButton");
             $addTodoButton.on('click', function (e) {
-                appRoot.instance.todoList.Model.addTodo(new appRoot.TodoModel(that.$el.find(".title").val(), that.$el.find(".description").val()));
-                appRoot.instance.todoCreationForm.Model.setTitle("");
-                appRoot.instance.todoCreationForm.Model.setDescription("");
+                todoList.instance.todoList.Model.addTodo(new todoList.TodoModel(that.$el.find(".title").val(), that.$el.find(".description").val()));
+                todoList.instance.todoCreationForm.Model.setTitle("");
+                todoList.instance.todoCreationForm.Model.setDescription("");
 
                 return false;
             });
 
             var $addChoreButton = that.$el.find(".addChoreButton");
             $addChoreButton.on('click', function (e) {
-                appRoot.instance.todoList.Model.addTodo(new appRoot.ChoreModel(that.$el.find(".title").val(), that.$el.find(".description").val()));
-                appRoot.instance.todoCreationForm.Model.setTitle("");
-                appRoot.instance.todoCreationForm.Model.setDescription("");
+                todoList.instance.todoList.Model.addTodo(new todoList.ChoreModel(that.$el.find(".title").val(), that.$el.find(".description").val()));
+                todoList.instance.todoCreationForm.Model.setTitle("");
+                todoList.instance.todoCreationForm.Model.setDescription("");
 
                 return false;
             });
@@ -66,6 +66,6 @@
         return init();
     }
 
-    appRoot.TodoCreationFormView = TodoCreationFormView;
-    appRoot.invertebrate.View.isExtendedBy(appRoot.TodoCreationFormView);
-}(appRoot));
+    todoList.TodoCreationFormView = TodoCreationFormView;
+    todoList.invertebrate.View.isExtendedBy(todoList.TodoCreationFormView);
+}(todoList));

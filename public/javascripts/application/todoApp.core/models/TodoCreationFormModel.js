@@ -2,8 +2,8 @@
 	function TodoCreationFormModel() {
 		"use strict";
 
-		if (!(this instanceof appRoot.TodoCreationFormModel)) {
-			return new appRoot.TodoCreationFormModel(); 
+		if (!(this instanceof todoList.TodoCreationFormModel)) {
+			return new todoList.TodoCreationFormModel();
 		}
 
 		var that = this, 
@@ -37,6 +37,6 @@
 		return init();
 	}
 
-	appRoot.TodoCreationFormModel = TodoCreationFormModel;
-    appRoot.invertebrate.Model.isExtendedBy(appRoot.TodoCreationFormModel);
-}(appRoot));
+	todoList.TodoCreationFormModel = TodoCreationFormModel;
+    todoList.invertebrate.Model.isExtendedBy(todoList.TodoCreationFormModel);
+}(todoList));

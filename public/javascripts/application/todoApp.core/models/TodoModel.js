@@ -2,8 +2,8 @@
 	"use strict";
 
 	function TodoModel(title, description, id) {
-		if (!(this instanceof appRoot.TodoModel)) {
-			return new appRoot.TodoModel(title, description);
+		if (!(this instanceof todoList.TodoModel)) {
+			return new todoList.TodoModel(title, description);
 		}
 
 		var that = this;
@@ -22,6 +22,6 @@
 		return init();
 	}
 
-	appRoot.TodoModel = TodoModel;
-    appRoot.invertebrate.Model.isExtendedBy(appRoot.TodoModel);
-}(appRoot));
+	todoList.TodoModel = TodoModel;
+    todoList.invertebrate.Model.isExtendedBy(todoList.TodoModel);
+}(todoList));

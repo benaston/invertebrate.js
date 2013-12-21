@@ -12,20 +12,20 @@
         throw "problem registering enum module. " + e;
     }
 
-}(appRoot.mod("enum")));
+}(todoList.mod("enum")));
 
 
 (function (mod) {
     "use strict";
 
     try {
-        mod.config = new appRoot.Config(appRoot.invertebrate.env.dev);
+        mod.config = new todoList.Config(todoList.invertebrate.env.dev);
     }
     catch (e) {
         throw "problem registering config module. " + e;
     }
 
-}(appRoot.mod("config")));
+}(todoList.mod("config")));
 
 (function (mod) {
     "use strict";
@@ -36,7 +36,7 @@
         throw "problem registering services module. " + e;
     }
 
-}(appRoot.mod("services")));
+}(todoList.mod("services")));
 
 (function (mod) {
     "use strict";
@@ -47,7 +47,7 @@
         throw "problem registering caches module. " + e;
     }
 
-}(appRoot.mod("caches")));
+}(todoList.mod("caches")));
 
 (function (mod) {
 
@@ -57,13 +57,13 @@
         throw "problem registering repositories module. " + e;
     }
 
-}(appRoot.mod("repositories")));
+}(todoList.mod("repositories")));
 
 (function (mod) {
     "use strict";
 
     try {
-        mod.TemplateServerSvc = new invertebrate.TemplateServerSvc(appRoot.mod("config").config,
+        mod.TemplateServerSvc = new invertebrate.TemplateServerSvc(todoList.mod("config").config,
             function () {
                 return '/templates';
             });
@@ -72,19 +72,19 @@
         throw "problem registering templates module. " + e;
     }
 
-}(appRoot.mod("templates")));
+}(todoList.mod("templates")));
 
 (function (mod) {
     "use strict";
 
     try {
-//        mod.uiRootModel = new appRoot.UIRootModel();
+//        mod.uiRootModel = new todoList.UIRootModel();
     }
     catch (e) {
         throw "problem registering models module. " + e;
     }
 
-}(appRoot.mod("models")));
+}(todoList.mod("models")));
 
 (function (mod) {
     "use strict";
@@ -96,29 +96,29 @@
         throw "problem registering factories module. " + e;
     }
 
-}(appRoot.mod("factories")));
+}(todoList.mod("factories")));
 
 (function (mod) {
     "use strict";
 
     try {
-//        mod.uiRootView = new appRoot.UIRootView(appRoot.mod("models").uiRootModel);
+//        mod.uiRootView = new todoList.UIRootView(todoList.mod("models").uiRootModel);
     }
     catch (e) {
         throw "problem registering views module. " + e;
     }
 
-}(appRoot.mod("views")));
+}(todoList.mod("views")));
 
 (function (mod) {
     "use strict";
 
     try {
-//        mod.homeController = new appRoot.HomeController(appRoot.mod("models").uiRootModel);
+//        mod.homeController = new todoList.HomeController(todoList.mod("models").uiRootModel);
     }
     catch (e) {
         throw "problem registering controllers module. " + e;
     }
 
-}(appRoot.mod("controllers")));
+}(todoList.mod("controllers")));
 

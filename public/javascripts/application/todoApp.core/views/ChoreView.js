@@ -2,8 +2,8 @@
     "use strict";
 
     function ChoreView(model) {
-        if (!(this instanceof appRoot.ChoreView)) {
-            return new appRoot.ChoreView(model);
+        if (!(this instanceof todoList.ChoreView)) {
+            return new todoList.ChoreView(model);
         }
 
         var that = this,
@@ -17,7 +17,7 @@
             options = options || { done: function () {
             } };
 
-            appRoot.instance.renderTemplate(that.$el, templateName, that.Model, {
+            todoList.instance.renderTemplate(that.$el, templateName, that.Model, {
                 done: function ($el) {
                     that.bindEvents($el, options.done);
                 } });
@@ -29,14 +29,14 @@
             }
 
             that.Model = model;
-            that.bindEvents = new appRoot.TodoView(that.Model).bindEvents;
+            that.bindEvents = new todoList.TodoView(that.Model).bindEvents;
 
-            return _.extend(that, new appRoot.invertebrate.View());
+            return _.extend(that, new todoList.invertebrate.View());
         }
 
         return init();
     }
 
-    appRoot.ChoreView = ChoreView;
-    appRoot.invertebrate.View.isExtendedBy(appRoot.TodoView);
-}(appRoot));
+    todoList.ChoreView = ChoreView;
+    todoList.invertebrate.View.isExtendedBy(todoList.TodoView);
+}(todoList));

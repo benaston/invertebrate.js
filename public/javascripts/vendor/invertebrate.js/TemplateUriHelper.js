@@ -12,7 +12,7 @@
 
         this.serverUriSelectionFunc = function () {
             return "./template-server/";
-        }; //see note 1
+        };
 
         this.getTemplateUri = function (templateName) {
             if(!templateName) { throw "templateName not supplied." }

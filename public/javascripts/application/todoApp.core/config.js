@@ -2,8 +2,8 @@
     "use strict";
 
     function Config(env) {
-        if (!(this instanceof appRoot.Config)) {
-            return new appRoot.Config(env);
+        if (!(this instanceof todoList.Config)) {
+            return new todoList.Config(env);
         }
 
         var that = this,
@@ -36,6 +36,6 @@
         return init();
     }
 
-    appRoot.Config = Config;
+    todoList.Config = Config;
 
-}(appRoot));
+}(todoList));

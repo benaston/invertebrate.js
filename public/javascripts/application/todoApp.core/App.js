@@ -2,8 +2,8 @@
     "use strict";
 
     function App(env) {
-        if (!(this instanceof appRoot.App)) {
-            return new appRoot.App(env);
+        if (!(this instanceof todoList.App)) {
+            return new todoList.App(env);
         }
 
         var that = this;
@@ -11,7 +11,7 @@
         this.registerRoutes = function () {
 
 //            that.router.registerRoute('/foo/bar', function (dto) {
-//                appRoot.mod("controllers").fooController.update(dto);
+//                todoList.mod("controllers").fooController.update(dto);
 //            }, { silent: true });
 
         };
@@ -23,11 +23,11 @@
 
             that.env = env;
 
-            return _.extend(that, new invertebrate.App(appRoot.mod("templates").TemplateServerSvc));
+            return _.extend(that, new invertebrate.App(todoList.mod("templates").TemplateServerSvc));
         }
 
         return init();
     }
 
-    appRoot.App = App;
-}(appRoot));
+    todoList.App = App;
+}(todoList));

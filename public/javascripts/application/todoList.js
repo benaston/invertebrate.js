@@ -2,15 +2,7 @@
 
 //provides top-level "namespace" (property on window)
 //to hang everything else off.
-window.appRoot = {
-
-    invertebrate: function() {
-        if(!window.invertebrate) {
-            throw "window.invertebrate not found. Ensure invertebrate.js is included in your page before your application JavaScript.";
-        }
-
-        return window.invertebrate;
-    },
+window.todoList = {
 
     mod: function () {
         var mods = {};

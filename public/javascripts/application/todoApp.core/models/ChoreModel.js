@@ -3,8 +3,8 @@
 
     function ChoreModel(id, title, description) {
 
-        if (!(this instanceof appRoot.ChoreModel)) {
-            return new appRoot.ChoreModel(id, title, description);
+        if (!(this instanceof todoList.ChoreModel)) {
+            return new todoList.ChoreModel(id, title, description);
         }
 
         var that = this;
@@ -31,7 +31,7 @@
         return init();
     }
 
-    appRoot.ChoreModel = ChoreModel;
-    appRoot.invertebrate.Model.isExtendedBy(appRoot.ChoreModel);
+    todoList.ChoreModel = ChoreModel;
+    todoList.invertebrate.Model.isExtendedBy(todoList.ChoreModel);
 
-}(appRoot));
+}(todoList));
