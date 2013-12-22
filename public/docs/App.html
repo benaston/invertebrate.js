@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>App.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="App.html">
+                App.js
+              </a>
+            
+              
+              <a class="source" href="Config.html">
+                Config.js
+              </a>
+            
+              
+              <a class="source" href="Logger.html">
+                Logger.js
+              </a>
+            
+              
+              <a class="source" href="Model.html">
+                Model.js
+              </a>
+            
+              
+              <a class="source" href="Router.html">
+                Router.js
+              </a>
+            
+              
+              <a class="source" href="SyncSvc.html">
+                SyncSvc.js
+              </a>
+            
+              
+              <a class="source" href="TemplateUriHelper.html">
+                TemplateUriHelper.js
+              </a>
+            
+              
+              <a class="source" href="View.html">
+                View.js
+              </a>
+            
+              
+              <a class="source" href="env.html">
+                env.js
+              </a>
+            
+              
+              <a class="source" href="invertebrate.html">
+                invertebrate.js
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>App.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="function"><span class="keyword">function</span> <span class="params">(invertebrate)</span> {</span>
+    <span class="string">"use strict"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>This function object should be the prototype of your application.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="function"><span class="keyword">function</span> <span class="title">App</span><span class="params">(templateServerSvc, logger)</span> {</span>
+        <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> invertebrate.App)) {
+            <span class="keyword">return</span> <span class="keyword">new</span> invertebrate.App(templateServerSvc);
+        }
+
+        <span class="keyword">var</span> that = <span class="keyword">this</span>,
+            _templateServerSvc = <span class="literal">null</span>,
+            _logger = <span class="literal">null</span>,
+            _templatePostRenderScripts = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Implements string-based &quot;namespaces&quot; aka. &quot;modules&quot;. Usage example: <code>myApp.mod(&#39;myNameSpace&#39;).MyFunctionObject</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        that.mod = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+            <span class="keyword">var</span> mods = {};
+
+            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="params">(name)</span> {</span>
+                <span class="keyword">if</span> (mods[name]) {
+                    <span class="keyword">return</span> mods[name];
+                }
+
+                <span class="keyword">return</span> mods[name] = {};
+            };
+        }();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Retrieves a template from the template server based on <code>templateName</code>, merges it with <code>model</code> and renders to DOM element <code>$el</code>. <code>templateName</code> should be something like <code>favorite.html</code>. The template server service encapsulates the logic for retrieving a template given a name. Options are: <code>done</code>, <code>error</code>, <code>postRenderScriptName</code>. <code>postRenderScriptName</code> is the name of a script to run which is given JQuery (<code>$</code>) and the rendered element (<code>$el</code>).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        that.renderTemplate = <span class="function"><span class="keyword">function</span> <span class="params">($el, templateName, model, options)</span> {</span>
+            <span class="keyword">if</span> (!$el) {
+                <span class="keyword">throw</span> <span class="string">"$el not supplied"</span>;
+            }
+
+            <span class="keyword">if</span> (!templateName) {
+                <span class="keyword">throw</span> <span class="string">"templateName not supplied"</span>;
+            }
+
+            <span class="keyword">if</span> (!model) {
+                <span class="keyword">throw</span> <span class="string">"model not supplied"</span>;
+            }
+
+            <span class="keyword">var</span> defaults = {
+                done: <span class="function"><span class="keyword">function</span> <span class="params">($el)</span> {</span> },
+                error: <span class="function"><span class="keyword">function</span> <span class="params">(jqxhr, settings, exception)</span> {</span>
+                    _logger.error(exception);
+
+                    <span class="keyword">throw</span> exception;
+                },
+                postRenderScriptName: <span class="literal">null</span>
+            };
+            options = _.extend({}, defaults, options);
+
+            <span class="keyword">var</span> templateUri = _templateServerSvc.getTemplateUri(templateName);
+
+            fetchTemplate(templateUri, { done: done });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Invokes the <code>onTemplateRetrieved</code> callback, supplying the model and JQuery. The result is added to <code>$el</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="function"><span class="keyword">function</span> <span class="title">done</span><span class="params">(onTemplateRetrieved)</span> {</span>
+                $el.html(onTemplateRetrieved({ model: _.clone(model) }, { jQuery: $ }));
+
+                <span class="keyword">if</span> (options.postRenderScriptName) {
+                    <span class="keyword">var</span> postRenderScriptUri = _templateServerSvc.getPostRenderScriptUri(options.postRenderScriptName);
+                    fetchTemplatePostRenderScript(postRenderScriptUri, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
+                        _templatePostRenderScripts[postRenderScriptUri]($, $el);
+                        options.done($el); <span class="comment">//NOTE: this is in correct location (really)! Purpose: supply $el for possible additional work, like DOM insertion.</span>
+                    });
+                } <span class="keyword">else</span> {
+                    options.done($el); <span class="comment">//complete for when there is no post-render action script</span>
+                }
+            }
+        };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Fetches a template from <code>templateUri</code>, caches it and supplies to success callback.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="function"><span class="keyword">function</span> <span class="title">fetchTemplate</span><span class="params">(templateUri, options)</span> {</span>
+            <span class="keyword">if</span> (!templateUri) {
+                <span class="keyword">throw</span> <span class="string">"uri not supplied"</span>;
+            }
+
+            <span class="keyword">var</span> defaultOptions = {
+                    done: <span class="function"><span class="keyword">function</span> <span class="params">(metadata)</span> {</span> },
+                    fail: <span class="function"><span class="keyword">function</span> <span class="params">(jqxhr, settings, exception)</span> {</span>
+                        _logger.error(exception);
+                        <span class="keyword">throw</span> exception;
+                    }
+                };
+            options = _.extend({}, defaultOptions, options);
+
+            <span class="keyword">var</span> ajaxDoneCallback = <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
+                    <span class="keyword">var</span> template = _.template(data);
+                    that.templates[templateUri] = template;
+                    options.done(template);
+                };
+
+            <span class="keyword">var</span> ajaxFailCallback = <span class="function"><span class="keyword">function</span> <span class="params">(res)</span> {</span>
+                    _logger.error(res.status);
+                };
+
+            that.templates = that.templates || {};
+
+            <span class="keyword">if</span> (that.templates[templateUri]) {
+                <span class="keyword">return</span> done(that.templates[templateUri]);
+            }
+
+            <span class="keyword">return</span> $.ajax({ url: templateUri, cache: <span class="literal">false</span> })
+                .done(ajaxDoneCallback)
+                .fail(ajaxFailCallback);
+
+            <span class="function"><span class="keyword">function</span> <span class="title">ajaxDone</span><span class="params">(data)</span> {</span>
+
+            }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Fetches the specified script (from memory if possible) and supplies it to the <code>done</code> callback.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="function"><span class="keyword">function</span> <span class="title">fetchTemplatePostRenderScript</span><span class="params">(uri, done)</span> {</span>
+            <span class="keyword">if</span> (!uri) {
+                <span class="keyword">throw</span> <span class="string">"uri not supplied."</span>
+            }
+            <span class="keyword">if</span> (!done) {
+                <span class="keyword">throw</span> <span class="string">"done not supplied."</span>
+            }
+
+            <span class="keyword">if</span> (_templatePostRenderScripts[uri]) {
+                <span class="keyword">return</span> done(_templatePostRenderScripts[uri]);
+            }
+
+            <span class="keyword">return</span> $.ajax( { url: uri,
+                             dataType: <span class="string">"text"</span>,
+                             cache: <span class="literal">false</span>,
+                             success: <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
+                                        _templatePostRenderScripts[uri] = eval(data).postRenderScript;
+                                       done(data);
+                                      }
+                            }).fail(<span class="function"><span class="keyword">function</span> <span class="params">(jqxhr, settings, exception)</span> {</span>
+                                        console.log(exception);
+                                    });
+        }
+
+        <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span> {</span>
+            <span class="keyword">if</span> (!templateServerSvc) {
+                <span class="keyword">throw</span> <span class="string">"templateServerSvc not supplied."</span>;
+            }
+            <span class="keyword">if</span> (!logger) {
+                <span class="keyword">throw</span> <span class="string">"logger not supplied."</span>;
+            }
+
+            _templateServerSvc = templateServerSvc;
+            _logger = logger;
+
+            <span class="keyword">return</span> that;
+        }
+
+        <span class="keyword">return</span> init();
+    }
+
+    invertebrate.App = App;
+}(invertebrate));</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

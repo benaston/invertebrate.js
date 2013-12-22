@@ -31,6 +31,18 @@
     "use strict";
 
     try {
+        mod.logging = new todoList.Config(todoList.invertebrate.env.dev);
+    }
+    catch (e) {
+        throw "problem registering config module. " + e;
+    }
+
+}(todoList.mod("config")));
+
+(function (mod) {
+    "use strict";
+
+    try {
     }
     catch (e) {
         throw "problem registering services module. " + e;

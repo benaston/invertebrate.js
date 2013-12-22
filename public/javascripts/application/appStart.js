@@ -12,6 +12,3 @@ jQuery(document).ready(function () {
     window.todoList.instance.router = new invertebrate.Router('Todo List');
     window.todoList.instance.registerRoutes();
 });
-
-
-

@@ -4,17 +4,7 @@
 //to hang everything else off.
 window.todoList = {
 
-    mod: function () {
-        var mods = {};
-
-        return function (name) {
-            if (mods[name]) {
-
-                return mods[name];
-            }
-
-            return mods[name] = {};
-        };
-    }()
+    //Implements string-based "namespaces" aka. "modules". Usage example: `myApp.mod('myNameSpace').MyFunctionObject`. NOTE: referring to the function on the invertebrate App constructor function is experimental.
+    mod: invertebrate.App.mod
 
 };

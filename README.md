@@ -29,4 +29,3 @@ Pull requests including bug fixes, new features and improved test coverage are w
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/benaston/invertebrate.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
