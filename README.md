@@ -1,13 +1,12 @@
 invertebrate.js
 ===============
 
-A purposefully simple and lightwieght client-side MVC framework. It offers:
+A simple library for supporting client-side MVC development. It includes:
 
- - dynamic template loading (with client-side caching)
+ - template loading functionality (with client-side caching)
  - client-side routing (including optional interception of both anchors and form submissions)
  - support for multiple environment configurations
  - message-based model update notification
- 
 
 License & Copyright
 --------
