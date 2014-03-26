@@ -6,7 +6,6 @@ A simple library for supporting client-side MVC development. It includes:
  - template loading functionality (with client-side caching)
  - client-side routing (including optional interception of both anchors and form submissions)
  - support for multiple environment configurations
- - message-based model update notification
 
 License & Copyright
 --------
