@@ -1,11 +1,13 @@
 invertebrate.js
 ===============
 
-A simple library for supporting client-side MVC development. It includes:
+A library for supporting client-side MVC development. It includes:
 
- - template loading functionality (with client-side caching)
+ - template loading functionality, supporting both local and remote templates (with client-side caching)
  - client-side routing (including optional interception of both anchors and form submissions)
  - support for multiple environment configurations
+
+An example implementation can be found at www.wizerati.com.
 
 License & Copyright
 --------
